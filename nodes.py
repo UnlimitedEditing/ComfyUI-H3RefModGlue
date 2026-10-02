@@ -79,7 +79,8 @@ class H3RefModFetchLoad:
             args[f"strength_{slot}"] = float(strength)
             args[f"copies_{slot}"] = int(copies)
         if slot == 0:
-            raise ValueError("H3RefModFetchLoad: give at least one refmod name")
+            # no names given: empty bundle, so Apply is a no-op and the workflow runs as plain ref mode
+            return ([], "")
         for i in range(slot + 1, loader_cls.MAX_SLOTS + 1):
             args[f"mod_{i}"] = loader_cls.NONE
         return loader_cls().load(**args)
